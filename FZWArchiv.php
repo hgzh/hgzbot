@@ -56,17 +56,11 @@
 				$weekS = str_pad($week, 2, '0', STR_PAD_LEFT);
 				
 				// parse sections
-				try {
-					$result = $this->mw->httpRequest([
-							'action' => 'parse',
-							'page'   => urlencode('Wikipedia:Fragen zur Wikipedia/Archiv/' . $year . '/Woche ' . $weekS),
-							'prop'   => 'sections'
-						],
-						'GET');
-				} catch (Exception $e) {
-					throw $e;
-				}
-				$tree  = json_decode($result, true);			
+				$result = $this->mw->mwApiGet([
+					'action' => 'parse',
+					'page'   => urlencode('Wikipedia:Fragen zur Wikipedia/Archiv/' . $year . '/Woche ' . $weekS),
+					'prop'   => 'sections'
+				]);
 								
 				$output .= "\n";
 				$output .= '== Woche ' . $weekS . ' ==';
@@ -74,7 +68,7 @@
 				$output .= '* [[../Archiv/' . $year . '/Woche ' . $weekS . ']]';
 				$output .= "\n\n";
 				
-				foreach ($tree['parse']['sections'] as $section) {
+				foreach ($result['parse']['sections'] as $section) {
 					for ($j = 1; $j <= $section['toclevel']; $j++) {
 						$output .= ':';
 					}
