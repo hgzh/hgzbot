@@ -43,7 +43,7 @@
 			
 			$output = "\n";
 			foreach ($r1 as $l1) {
-				$output .= '# [[:' . str_replace('_', ' ', $l1['title']) . ']] <small>(' . $l1['count'] . ' Links)</small>';
+				$output .= '# [[:' . str_replace('_', ' ', $l1['title']) . ']] <small>([{{fullurl:Spezial:Linkliste/' . $l1['title'] . '|namespace=0}} ' . $l1['count'] . ' Links])</small>';
 				$output .= "\n";
 			}
 			$q1->close();
