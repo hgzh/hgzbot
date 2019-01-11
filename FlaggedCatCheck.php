@@ -51,10 +51,10 @@
 
 				// last visit
 				$match = [];
-				if (preg_match('/HGZ_FCC_LASTVISIT\s*\=\s*(\d{12})/', $text, $match) == 1) {
-					$cnfLastVisit = $match[1];
+				if (preg_match('/HGZ_FCC_LASTVISIT\s*\=\s*(\d{10})/', $text, $match) == 1) {
+					$cnfLastVisit = $match[1] . '00';
 				} else {
-					$cnfLastVisit = '200000000000';
+					$cnfLastVisit = '2000000000';
 				}
 				
 				// check last visited/frequency
