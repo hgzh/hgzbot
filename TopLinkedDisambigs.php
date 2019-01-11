@@ -41,17 +41,19 @@
 			
 			$r1 = phpWBFdatabase::fetchDBQueryResult($q1);
 			
+			$counttotal = 0;
 			$output = "\n";
 			foreach ($r1 as $l1) {
 				$output .= '# [[:' . str_replace('_', ' ', $l1['title']) . ']] <small>([{{fullurl:Spezial:Linkliste/' . $l1['title'] . '|namespace=0}} ' . $l1['count'] . ' Links])</small>';
 				$output .= "\n";
+				$counttotal = $counttotal + $l1['count'];
 			}
 			$q1->close();
 			
 			$newtext = $this->mw->getWikitext('Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS');
 			$newtext = preg_replace('/<!--\s*HGZ_TLD_START\s*-->(.+)<!--\s*HGZ_TLD_END\s*-->/s', '<!-- HGZ_TLD_START -->' . $output . '<!-- HGZ_TLD_END -->', $newtext, 1);
 			
-			$this->mw->editPage('Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS', $newtext, 'Bot: Aktualisiere Liste');
+			$this->mw->editPage('Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS', $newtext, 'Bot: Aktualisiere Liste (' . $counttotal . ' Links)');
 
 			$this->mw->log('finished run');
 			
