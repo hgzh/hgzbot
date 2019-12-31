@@ -29,17 +29,17 @@
 			$this->db->connectWMCSReplica('dewiki.analytics.db.svc.eqiad.wmflabs', 'dewiki_p');
 			
 			$t1  = 'SELECT pl.pl_title AS title, COUNT(pl.pl_title) AS count';
-			$t1  = ' FROM pagelinks pl';
-			$t1  = ' INNER JOIN page pd ON (pd.page_title = pl.pl_title AND pd.page_namespace = pl.pl_namespace)';
-			$t1  = ' LEFT JOIN page ps ON (ps.page_id = pl.pl_from)';
-			$t1  = ' LEFT JOIN pagelinks pls ON (pls.pl_title = ps.page_title AND pls.pl_namespace = 0 AND pls.pl_from_namespace = 0 AND ps.page_is_redirect = 1)';
-			$t1  = ' LEFT JOIN page plsp ON (plsp.page_id = pls.pl_from)';
-			$t1  = ' INNER JOIN page_props pp ON (pp.pp_page = pd.page_id AND pp.pp_propname = \'disambiguation\')';
-			$t1  = ' WHERE pl.pl_namespace = 0';
-			$t1  = ' AND pl.pl_from_namespace = 0';
-			$t1  = ' GROUP BY pl.pl_title';
-			$t1  = ' ORDER BY COUNT(pl.pl_title) DESC';
-			$t1  = ' LIMIT 200';
+			$t1 .= ' FROM pagelinks pl';
+			$t1 .= ' INNER JOIN page pd ON (pd.page_title = pl.pl_title AND pd.page_namespace = pl.pl_namespace)';
+			$t1 .= ' LEFT JOIN page ps ON (ps.page_id = pl.pl_from)';
+			$t1 .= ' LEFT JOIN pagelinks pls ON (pls.pl_title = ps.page_title AND pls.pl_namespace = 0 AND pls.pl_from_namespace = 0 AND ps.page_is_redirect = 1)';
+			$t1 .= ' LEFT JOIN page plsp ON (plsp.page_id = pls.pl_from)';
+			$t1 .= ' INNER JOIN page_props pp ON (pp.pp_page = pd.page_id AND pp.pp_propname = \'disambiguation\')';
+			$t1 .= ' WHERE pl.pl_namespace = 0';
+			$t1 .= ' AND pl.pl_from_namespace = 0';
+			$t1 .= ' GROUP BY pl.pl_title';
+			$t1 .= ' ORDER BY COUNT(pl.pl_title) DESC, pl.pl_title';
+			$t1 .= ' LIMIT 200';
 			
 			$q1 = $this->db->query($t1);
 			
