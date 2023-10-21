@@ -234,7 +234,11 @@
 				$this->mw->editPage(
 					$customer['title'],
 					$newtext,
-					str_replace( '$1', $count, $this->config['config']['summary'] )
+					str_replace(
+						['$1', '$2'],
+						[$count, count( $pages )],
+						$this->config['config']['summary']
+					)
 				);
 				
 				unset( $pages );
