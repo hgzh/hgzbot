@@ -171,12 +171,13 @@
 					$t2 .= '      AND cl_to = Cat.page_title';
 					$t2 .= '      AND cl_type = "subcat"';
 					$t2 .= ')';
-					$t2 .= 'SELECT DISTINCT Art.page_title AS "page", Flag.fpp_pending_since AS "since"';
+					$t2 .= 'SELECT DISTINCT Art.page_title AS "page", Flag.fp_pending_since AS "since"';
 					$t2 .= '  FROM Cat';
 					$t2 .= '  INNER JOIN categorylinks AS Catlinks ON Cat.page_title = Catlinks.cl_to';
 					$t2 .= '  INNER JOIN page AS Art ON Catlinks.cl_from = Art.page_id';
-					$t2 .= '  INNER JOIN flaggedpage_pending AS Flag ON Flag.fpp_page_id = Art.page_id';
+					$t2 .= '  INNER JOIN flaggedpages AS Flag ON Flag.fp_page_id = Art.page_id';
 					$t2 .= '  WHERE Art.page_namespace = 0';
+					$t2 .= '    AND Flag.fp_pending_since IS NOT NULL';
 					$t2 .= ' ORDER BY since';
 					$q2 = $this->db->executeDBQuery( $t2, 's', $cat );
 					$r2 = phpWBFdatabase::fetchDBQueryResult( $q2 );
